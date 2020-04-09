@@ -30,48 +30,67 @@ bot.command("shorcut", (ctx) => {
     // ctx.reply("text", [extra]); => with context shortcuts => reply() is the context shortcut
     ctx.reply("Hello World");
     // bot.telegram.sendMessage(chatId,"text", [extra]); => using Telegram methods
-    // bot.telegram.sendMessage(ctx.chat.id, "Hello World");
+    bot.telegram.sendMessage(ctx.chat.id, "Hello World");
 });
 
-// hears() => Registers middleware for handling text messages, and it's not a Telegram command
-// This method won't work in a group due to group privacy settings, disable it by ::> BotFather-> /mybots-(choose your bot)->Bot Settings->Group Privacy->Turn Off
-// hears() listens to the word/string/text only when it is entered alone and not when given with other text
-// "cat" works, but "hi cat" does not work
-bot.hears("cat", (ctx) => {
-    ctx.reply("Meow");
-});
+// Some middlewares have extra parameters property, some have values/properties as string or boolean
+bot.command('extra', (ctx) => {
 
-//Registers middleware for provided update type => gives a response when a certain update type is entered 
-// bot.on("update_type", callback_fn());
-bot.on("sticker", (ctx) => {
-    ctx.reply("Sticker Popup");
-});
+    // bot.telegram.sendMessage(chatId,"text", [extra]); => using Telegram methods
+    bot.telegram.sendMessage(ctx.chat.id, "Hello World",
+        {//Extra params is an obj, when passing multiple params, include them as attributes in the object 
+            parse_mode: 'Markdown',
+            disable_notification: true
+        }
+    );
 
-//handles user mentions like, @Guhaprasaanth => also works when the mention @Guhan is enclosed within a huge body of text
-bot.mention(["Guhan", "guhan"], (ctx) => {
-    ctx.reply("The Admin")
-});
+    // bot.telegram.sendMessage(chatId,"text", [extra]); => using Telegram methods
+    ctx.reply("Hello World",
+        {//Extra params is an obj, when passing multiple params, include them as attributes in the object 
+            parse_mode: 'Markdown',
+            disable_notification: true
+        }
+    );
+    // hears() => Registers middleware for handling text messages, and it's not a Telegram command
+    // This method won't work in a group due to group privacy settings, disable it by ::> BotFather-> /mybots-(choose your bot)->Bot Settings->Group Privacy->Turn Off
+    // hears() listens to the word/string/text only when it is entered alone and not when given with other text
+    // "cat" works, but "hi cat" does not work
+    bot.hears("cat", (ctx) => {
+        ctx.reply("Meow");
+    });
 
-//handles phone numbers
-bot.phone("+918870784275", (ctx) => {
-    ctx.reply("Someone's Phone Number")
-});
+    //Registers middleware for provided update type => gives a response when a certain update type is entered 
+    // bot.on("update_type", callback_fn());
+    bot.on("sticker", (ctx) => {
+        ctx.reply("Sticker Popup");
+    });
 
-//handles hashtags eg. #hash
-bot.hashtag("hash", (ctx) => {
-    ctx.reply("Some Hashtag");
-});
+    //handles user mentions like, @Guhaprasaanth => also works when the mention @Guhan is enclosed within a huge body of text
+    bot.mention(["Guhan", "guhan"], (ctx) => {
+        ctx.reply("The Admin")
+    });
 
-// Registers a middleware => Takes in a middleware fn() and hadles all req from the user
-// Evertime the user interacts with the bot, it will be handled by the use()
-bot.use((ctx, next) => { //next => callback_fn() just like in ExpressJS. next() will call the next middleware, start() in this case
-    // state allows us to pass data between middlewares > state is nothing but data stored
-    ctx.state.date = 8;
-    ctx.reply("The bot was used");
-    next(ctx); //Passes the Telegram context obj to the 
-    //next() will still do the same without the ctx passed in, but passing in ctx will allow the next middleware to handle the-
-    //-data which had been changed in the current fn() where the next() was called
-});
+    //handles phone numbers
+    bot.phone("+918870784275", (ctx) => {
+        ctx.reply("Someone's Phone Number")
+    });
 
-//cmd to launch Telegram bot to start pulling in updates
-bot.launch(); 
+    //handles hashtags eg. #hash
+    bot.hashtag("hash", (ctx) => {
+        ctx.reply("Some Hashtag");
+    });
+
+    // Registers a middleware => Takes in a middleware fn() and hadles all req from the user
+    // Evertime the user interacts with the bot, it will be handled by the use()
+    bot.use((ctx, next) => { //next => callback_fn() just like in ExpressJS. next() will call the next middleware, start() in this case
+        // state allows us to pass data between middlewares > state is nothing but data stored
+        ctx.state.date = 8;
+        // ctx.reply("The bot was used");
+        bot.telegram.sendMessage(ctx.chat.id, "The bot was used");
+        next(ctx); //Passes the Telegram context obj to the 
+        //next() will still do the same without the ctx passed in, but passing in ctx will allow the next middleware to handle the-
+        //-data which had been changed in the current fn() where the next() was called
+    });
+
+    //cmd to launch Telegram bot to start pulling in updates
+    bot.launch(); 
