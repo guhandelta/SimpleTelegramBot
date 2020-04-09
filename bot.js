@@ -10,6 +10,13 @@ bot.start((ctx) => {
     ctx.reply(ctx.from.first_name + " has entered the start command and it is a " + ctx.updateSubTypes[0]);
 });
 
+// Registers a middleware => Takes in a middleware fn() and hadles all req from the user
+// Evertime the user interacts with the bot, it will be handled by the use()
+bot.use((ctx, next) => { //next => callback_fn() just like in ExpressJS. next() will call the next middleware, start() in this case
+    ctx.reply("The bot was used");
+    next(ctx); //Passes the Telegram context obj to the 
+});
+
 
 bot.help((ctx) => {
     ctx.reply("bot's here to help you");
@@ -53,12 +60,6 @@ bot.phone("+918870784275", (ctx) => {
 //handles hashtags eg. #hash
 bot.hashtag("hash", (ctx) => {
     ctx.reply("Some Hashtag");
-});
-
-// Registers a middleware => Takes in a middleware fn() and hadles all req from the user
-// Evertime the user interacts with the bot, it will be handled by the use()
-bot.use((ctx) => {
-    ctx.reply("The bot was used");
 });
 
 //cmd to launch Telegram bot to start pulling in updates
