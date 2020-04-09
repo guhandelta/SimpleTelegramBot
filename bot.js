@@ -55,5 +55,11 @@ bot.hashtag("hash", (ctx) => {
     ctx.reply("Some Hashtag");
 });
 
+// Registers a middleware => Takes in a middleware fn() and hadles all req from the user
+// Evertime the user interacts with the bot, it will be handled by the use()
+bot.use((ctx) => {
+    ctx.reply("The bot was used");
+});
+
 //cmd to launch Telegram bot to start pulling in updates
 bot.launch(); 
