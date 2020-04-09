@@ -26,5 +26,13 @@ bot.command(["test", "Test", "tst"], (ctx) => {
     ctx.reply("Custom Command Works!!!!!");
 });
 
+// hears() => Registers middleware for handling text messages, and it's not a Telegram command
+// This method won't work in a group due to group privacy settings, disable it by ::> BotFather-> /mybots-(choose your bot)->Bot Settings->Group Privacy->Turn Off
+// hears() listens to the word/string/text only when it is entered alone and not when given with other text
+// "cat" works, but "hi cat" does not work
+bot.hears("cat", (ctx) => {
+    ctx.reply("Meow");
+});
+
 //cmd to launch Telegram bot to start pulling in updates
 bot.launch(); 
