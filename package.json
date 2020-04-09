@@ -1,0 +1,29 @@
+{
+  "name": "myfirsttelegrambot",
+  "version": "1.0.0",
+  "description": "My First Telegram Bot using JavaScript + Node.js and Telegraf.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guhandelta/SimpleTelegramBot.git"
+  },
+  "keywords": [
+    "Telegram",
+    "Bot",
+    "Telegram",
+    "Bot",
+    "Telegraf"
+  ],
+  "author": "Guhaprasaanth Nandagopal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guhandelta/SimpleTelegramBot/issues"
+  },
+  "homepage": "https://github.com/guhandelta/SimpleTelegramBot#readme",
+  "dependencies": {
+    "telegraf": "^3.32.0"
+  }
+}
