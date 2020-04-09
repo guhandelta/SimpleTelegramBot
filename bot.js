@@ -3,20 +3,23 @@ const Telegraf = require('telegraf'); // a class has been imported here, so the 
 //creating an instance of a bot using the *Telegraf* as a constructor
 const bot = Telegraf(TELEGRAF_API_KEY); // api token within the () was provided by the BotFather
 
+// Registers a middleware => Takes in a middleware fn() and hadles all req from the user
+// Evertime the user interacts with the bot, it will be handled by the use()
+bot.use((ctx, next) => { //next => callback_fn() just like in ExpressJS. next() will call the next middleware, start() in this case
+    // state allows us to pass data between middlewares > state is nothing but data stored
+    ctx.state.date = 8;
+    ctx.reply("The bot was used");
+    next(ctx); //Passes the Telegram context obj to the 
+    //next() will still do the same without the ctx passed in, but passing in ctx will allow the next middleware to handle the-
+    //-data which had been changed in the current fn() where the next() was called
+});
+
 // start(ctx,next) => ctx -> context obj is the context for one Telegram update || next -(optional)-> fn(), like a callback
 // A Telegraf Context encapsulates telegram update. Context is created per request and contains many props like edit message,....etc
 // Any msg or sticker or media sent, will be sent as a req to this script || Request(Telegraf_Context(Data))
 bot.start((ctx) => {
     ctx.reply(ctx.from.first_name + " has entered the start command and it is a " + ctx.updateSubTypes[0]);
 });
-
-// Registers a middleware => Takes in a middleware fn() and hadles all req from the user
-// Evertime the user interacts with the bot, it will be handled by the use()
-bot.use((ctx, next) => { //next => callback_fn() just like in ExpressJS. next() will call the next middleware, start() in this case
-    ctx.reply("The bot was used");
-    next(ctx); //Passes the Telegram context obj to the 
-});
-
 
 bot.help((ctx) => {
     ctx.reply("bot's here to help you");
