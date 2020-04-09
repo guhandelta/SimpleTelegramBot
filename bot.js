@@ -40,6 +40,20 @@ bot.on("sticker", (ctx) => {
     ctx.reply("Sticker Popup");
 });
 
+//handles user mentions like, @Guhaprasaanth => also works when the mention @Guhan is enclosed within a huge body of text
+bot.mention(["Guhan", "guhan"], (ctx) => {
+    ctx.reply("The Admin")
+});
+
+//handles phone numbers
+bot.phone("+918870784275", (ctx) => {
+    ctx.reply("Someone's Phone Number")
+});
+
+//handles hashtags eg. #hash
+bot.hashtag("hash", (ctx) => {
+    ctx.reply("Some Hashtag");
+});
 
 //cmd to launch Telegram bot to start pulling in updates
 bot.launch(); 
