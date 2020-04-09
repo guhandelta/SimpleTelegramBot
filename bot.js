@@ -34,5 +34,12 @@ bot.hears("cat", (ctx) => {
     ctx.reply("Meow");
 });
 
+//Registers middleware for provided update type => gives a response when a certain update type is entered 
+// bot.on("update_type", callback_fn());
+bot.on("sticker", (ctx) => {
+    ctx.reply("Sticker Popup");
+});
+
+
 //cmd to launch Telegram bot to start pulling in updates
 bot.launch(); 
