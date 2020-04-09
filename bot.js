@@ -8,14 +8,6 @@ const bot = Telegraf(TELEGRAF_API_KEY); // api token within the () was provided 
 // Any msg or sticker or media sent, will be sent as a req to this script || Request(Telegraf_Context(Data))
 bot.start((ctx) => {
     ctx.reply(ctx.from.first_name + " has entered the start command and it is a " + ctx.updateSubTypes[0]);
-    console.log("/n-------------------From--------------------------------/n");
-    console.log(ctx.from);
-    console.log("/n-------------------Chat--------------------------------/n");
-    console.log(ctx.chat);
-    console.log("/n-------------------Message-----------------------------/n");
-    console.log(ctx.message);
-    console.log("/n-------------------updateSubTypes----------------------/n");
-    console.log(ctx.updateSubTypes);
 });
 
 
@@ -26,6 +18,12 @@ bot.help((ctx) => {
 
 bot.settings((ctx) => {
     ctx.reply("How do you want to configure your bot?");
+});
+
+// Custom Telegram bot commands are created using the `command()` || 2 params, 1) String or Array of Strings(case sensitive) 2. Callback fn()
+// bot.command("test", (ctx) => { 
+bot.command(["test", "Test", "tst"], (ctx) => {
+    ctx.reply("Custom Command Works!!!!!");
 });
 
 //cmd to launch Telegram bot to start pulling in updates
